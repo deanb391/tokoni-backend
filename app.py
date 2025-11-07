@@ -9,6 +9,8 @@ import urllib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import random
+from dotenv import load_dotenv
+import os
 
 
 app = Flask(__name__)
@@ -16,37 +18,39 @@ app = Flask(__name__)
 
 CORS(app)  
 
-appwriteConfig = { 
-  'endpoint': 'https://fra.cloud.appwrite.io/v1', 
-  'platform': 'com.jsm.tokoni',
-  'projectId': '680691d5000568084744',
-  'databaseId': '680693f6003c6ef1a190',
-  'userCollectionId': '680694120032819d8799',
-  'shopCollectionId': '6806941e002cccaa571f',
-  'productCollectionId': '68069423003e1886bfc6',
-  'reviewCollectionId': '6806943e002a7fb55dfa',
-  'heartsCollectionId': '6806a2700013a4751af9',
-  'storageId': '68069b5b0038042c4d12',
-  'chatsCollectionId': '68069429003b9f9df7b0',
-  'messagesCollectionId': '68069430000b0e94c483',
-  'postCollectionId': '68069524003528fc5aa7',
-  'commentCollectionId': '6806945600187f60c80d',
-  'postLikesCollectionId': '6806946b00036ece1aaf',
-  'notificationsCollectionId': '6806948700116a766c18',
-  'settingsCollectionId': '68069496000f9beedf64',
-  'shopViewsCollectionId': '6806947400158907564d',
-  'notificationsSettingId': '6808828400352526c61d',
-  'profileSettingId': '680882c3003e6f11ef22',
 
+
+load_dotenv()  # Loads .env file
+
+appwriteConfig = {
+    'endpoint': os.getenv('APPWRITE_ENDPOINT'),
+    'projectId': os.getenv('APPWRITE_PROJECT_ID'),
+    'databaseId': os.getenv('APPWRITE_DATABASE_ID'),
+    'userCollectionId': os.getenv('APPWRITE_USER_COLLECTION_ID'),
+    'shopCollectionId': os.getenv('APPWRITE_SHOP_COLLECTION_ID'),
+    'productCollectionId': os.getenv('APPWRITE_PRODUCT_COLLECTION_ID'),
+    'reviewCollectionId': os.getenv('APPWRITE_REVIEW_COLLECTION_ID'),
+    'heartsCollectionId': os.getenv('APPWRITE_HEARTS_COLLECTION_ID'),
+    'storageId': os.getenv('APPWRITE_STORAGE_ID'),
+    'chatsCollectionId': os.getenv('APPWRITE_CHATS_COLLECTION_ID'),
+    'messagesCollectionId': os.getenv('APPWRITE_MESSAGES_COLLECTION_ID'),
+    'postCollectionId': os.getenv('APPWRITE_POST_COLLECTION_ID'),
+    'commentCollectionId': os.getenv('APPWRITE_COMMENT_COLLECTION_ID'),
+    'postLikesCollectionId': os.getenv('APPWRITE_POST_LIKES_COLLECTION_ID'),
+    'notificationsCollectionId': os.getenv('APPWRITE_NOTIFICATIONS_COLLECTION_ID'),
+    'settingsCollectionId': os.getenv('APPWRITE_SETTINGS_COLLECTION_ID'),
+    'shopViewsCollectionId': os.getenv('APPWRITE_SHOP_VIEWS_COLLECTION_ID'),
+    'notificationsSettingId': os.getenv('APPWRITE_NOTIFICATIONS_SETTING_ID'),
+    'profileSettingId': os.getenv('APPWRITE_PROFILE_SETTING_ID'),
 }
 
 client = Client()
 
 (client
- .set_endpoint(appwriteConfig["endpoint"])
- .set_project(appwriteConfig["projectId"])
- .set_key('standard_b02158e7c07adbbbfd9d5be0e6ecc59da5fac70cc540af8232e30cdb7f1deb3a4d3d16b299b60c93c524a664208deb08fe2c5b34409f7ac91bd1ab32173e777e80e7636e90f5c18f0c72a21da54f2fa500a220e0f735ade003c6aae53a069a99deeab00549feac828bb09404c77cdffa2cd7adf4ac54d834b2ab352f2925ac6f'))  
-
+ .set_endpoint(appwriteConfig['endpoint'])
+ .set_project(appwriteConfig['projectId'])
+ .set_key(os.getenv('APPWRITE_API_KEY'))
+)
 database = Databases(client)
 account = Account(client)
 storage = Storage(client)
